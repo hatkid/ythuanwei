@@ -1,0 +1,781 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<meta content="no" name="apple-mobile-web-app-capable" /> 
+<meta charset="UTF-8">
+<title>中移在线服务有限公司</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+<style type="text/css">
+
+</style>
+<script type="text/javascript" src="iscroll.js"></script>
+<script type="text/javascript">
+function $$(id){return document.getElementById(id)}
+//var imgUrl = 'http://1822mall.com/project1/images/wx_img.jpg';
+//var lineLink = 'http://1822mall.com/project1/';
+//var imgUrl = 'http://116.255.193.122:9999/pCM/images/wx_img.jpg';
+//var lineLink = 'http://116.255.193.122:9999/pCM/';
+var imgUrl = 'http://theal.net/projects/2014/pCM4/images/wx_img.jpg';
+var lineLink = 'http://theal.net/projects/2014/pCM4/index.html';
+/*var siteUrl = window.location.href;
+if(siteUrl.charAt(siteUrl.length -1) != '/'){
+	siteUrl += '/';
+}
+var imgUrl = siteUrl+'images/wx_img.jpg';
+var lineLink = siteUrl;
+*/
+var shareTitle = '中移在线服务有限公司';
+var descContent = "欢迎进入中移在线服务的精彩世界！";
+var appid = '';
+
+function shareFriend() {
+    WeixinJSBridge.invoke('sendAppMessage',{
+        "appid": appid,
+        "img_url": imgUrl,
+        "img_width": "200",
+        "img_height": "200",
+        "link": lineLink,
+        "desc": descContent,
+        "title": shareTitle
+    }, function(res) {
+    _report('send_msg', res.err_msg);
+    })
+}
+function shareTimeline() {
+    WeixinJSBridge.invoke('shareTimeline',{
+        "img_url": imgUrl,
+        "img_width": "200",
+        "img_height": "200",
+        "link": lineLink,
+        "desc": descContent,
+        "title": shareTitle
+    }, function(res) {
+    _report('timeline', res.err_msg);
+    });
+}
+function shareWeibo() {
+    WeixinJSBridge.invoke('shareWeibo',{
+        "content": descContent,
+        "url": lineLink,
+    }, function(res) {
+    _report('weibo', res.err_msg);
+    });
+}
+try{
+// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function(argv){
+		shareFriend();
+	});
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function(argv){
+		shareTimeline();
+	});
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function(argv){
+		shareWeibo();
+	});
+}, false);
+}catch(e){
+}
+//--------------------
+var myScroll, tar, total = 0, cw = 0, ch = 0, page, nowPage = 1, p1e0, p1e1, p2e0, p2e1, p6e1, page2, page3, page4, page6, page10, page11, page12, page13, page14, last1, last2, audio, audioBtn, roller, rolled = false, tar, wp2, lastSub, lastFlip, flipTime, flipTimeLast, lastIn = -1, sub1, sub2, sub3, sub4, page2First = true, boxText = new Array('市政', '传媒', '教育', '物流'), boxId = 0, hand1, hand2;
+var fstTimeFlip = true, pFirst = new Array();
+window.onload = function () {
+	page = $$('page');
+	tar = $$('wrapper');
+	total = tar.children[0].children.length;
+	p1e1 = $$('p1e1');
+	p2e0 = $$('p2e0');
+	p2e1 = $$('p2e1');
+	p6e1 = $$('p6e1');
+	roller = $$('roller');
+	page14 = $$('page14');
+	page4 = $$('page4');
+	wp2 = $$('wrapper2');
+	page2 = $$('page2');
+	page3 = $$('page3');
+	page6 = $$('page6');
+	page10 = $$('page10');
+	page11 = $$('page11');
+	page12 = $$('page12');
+	page13 = $$('page13');
+	sub1 = $$('sub1');
+	sub2 = $$('sub2');
+	sub3 = $$('sub3');
+	sub4 = $$('sub4');
+	//hand1 = $$('hand1');
+	hand2 = $$('hand2');
+	
+	$$('fIcons').style.visibility = 'visible';
+	cw = $$('all').offsetWidth;
+	ch = $$('all').offsetHeight;//window.innerHeight;//document.documentElement.clientHeight;
+	//alert('!!ch='+ch+' inH='+window.innerHeight+'  ='+document.documentElement.clientHeight+' screen.height='+screen.height);
+	if(document.documentElement.clientHeight == screen.height){
+		ch = document.documentElement.clientHeight - 64;
+		$$('all').style.height = ch+'px';
+		tar.children[0].style.height = ch * total + total + 'px';
+	}else{
+		tar.children[0].style.height = ch * total + total + 64 + 'px';
+	}
+	//$$('all').style.height = ch+'px';
+	for(i = 0; i < total; i++){
+		tar.children[0].children[i].style.height = ch+'px';
+	}
+	for(i = 0; i < wp2.children.length; i++){
+		wp2.children[i].style.height = ch+'px';
+	}
+	
+	//callIn(0, 3);
+	maskLoad();
+	//$$('all').style.opacity = 1;
+	myScroll = new IScroll('#wrapper', {
+		momentum: false,
+		snap: 'li',
+		click: true,
+		mouseWheel: true,
+		//mouseWheelSpeed: 1,
+		keyBindings: true,
+		preventDefault: true,
+		snapThreshold: 0.2,
+		snapSpeed: 1000
+	});
+	//myScroll.goToPage(0, 5, 0);
+	myScroll.on('scrollEnd', function(){
+		nowPage = myScroll.currentPage.pageY + 1;
+		page.innerHTML = nowPage+'/13';
+		switch (nowPage){
+			case 2:
+				//if(!pFirst[2]){
+					page2.innerHTML = '<p class="newTxt">中国移动服务客户的模式，<br>也正因此迎来前所未有的重大转变</p><h2 class="newTitle" id="p2e2">曾经，我们等待客户</h2>';
+					//pFirst[2] = true;
+					$$('p2e2').addEventListener("webkitAnimationEnd", function(){this.style.opacity = 1;}, false);
+				//}
+				break;
+			case 3:
+				page3.innerHTML = '<h2 class="newTitle">今天，客户在哪里<br>我们就在哪里</h2><div class="balls"></div><div class="balls no2"></div><div class="balls no3"></div><div class="balls no4"></div><div class="balls no5"></div><div class="balls no6"></div><div class="balls no7"></div>';
+				break;
+			case 4:
+				if(!pFirst[4]){
+					page4.innerHTML = '<h2 class="newTitle">中移在线服务有限公司</h2><p class="newTxt">中国移动数字时代规模最大的全资专业子公司<br><span style="font-size:">已全新成立</span></p>';
+					//$$('p4e2').addEventListener("webkitAnimationEnd", function(){this.style.opacity = 1;}, false);
+					//pFirst[4] = true;
+				}
+				break;
+			case 5:
+				//if(!pFirst[5]){
+					page11.innerHTML = '<div id="p11e1"></div><h5 id="p11e2">开拓创新、随需而变，依托中国移动长期积累的大数据资源，积极探索面向个人客户与政企客户的在线服务之道。</h5><img id="p11e3" src="images/page11-e3.png" alt="">';
+					$$('p11e1').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					$$('p11e2').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					$$('p11e3').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					//pFirst[5] = true;
+				//}
+				break;
+			case 6:
+				//if(!pFirst[6]){
+					page6.innerHTML = '<h3 class="weAre" style="letter-spacing:1px; text-align:center;">&nbsp;</h3><div id="p6e2"></div><div id="p6e3"></div><div id="p6e4"></div><div id="p6e1" onClick="callIn(1, 0)">查看详情</div>';
+					//pFirst[6] = true;
+				//}
+				break;
+			/*case 6:
+				if(!pFirst[6]){
+					$$('page7').innerHTML = '<h3 class="weAre" style="letter-spacing:1px;">全网渠道运营的集中支撑者</h3><h5 id="p7e2">为社会代理渠道、连锁渠道、电商渠<br>道及虚拟运营商等提供一点对接服务</h5>';
+					$$('p7e2').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					pFirst[6] = true;
+				}
+				break;
+			case 7:
+				if(!pFirst[7]){
+					$$('page8').innerHTML = '<h3 class="weAre" style="letter-spacing:1px;">全网业务的后台集中处理者</h3><h5 id="p8e2">对开户等业务提供集中审核与办理等服务</h5>';
+					$$('p8e2').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					pFirst[7] = true;
+				}
+				break;
+			case 1888:
+				if(!rolled){
+					rolled = true;
+					makeRoller();
+				}else{
+				}
+				break;
+				*/
+			case 9:
+				if(!pFirst[9]){
+					page10.className = 'doAni';
+					page10.innerHTML = '<div id="p10e1" class="p10e"><div class="con" onClick="callIn(2, 0)"></div></div><div id="p10e2" class="p10e"><div class="con" onClick="callIn(2, 1)"></div></div><p class="newTxt">中移在线服务有限公司打破按行政区域划分呼叫中心的传统，建立中国移动（洛阳）呼叫中心和（淮安）呼叫中心两大智慧园区。<br>实现集中化管理，将为全国客户提供标准化、高质量的服务。</p>';
+					page10.addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+						$$('p10e1').style.webkitAnimation='fold3 1s 1';
+					}, false);
+					$$('p10e1').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+						$$('p10e2').style.webkitAnimation='fold2 1s 1';
+					}, false);
+					$$('p10e2').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					pFirst[9] = true;
+				}
+				break;
+			case 10:
+				//if(!pFirst[10]){
+					page12.innerHTML = '<div id="p12e1"><p>中移在线服务有限公司<br>即将启动面向系统内和全社会的</p><p>人力资源招聘</p><p>微博、微信互联网内容运营</p><p>互联网传播</p><p>IT支撑系统设计开发</p><p>智慧园区规划与建设</p><p>业务产品开发与营销</p><p>渠道拓展</p><p>人力资源</p><p>法律事务</p><p>财务管理</p><p>……</p></div>';
+					$$('p12e1').style.webkitAnimation='fold2 1s 1';
+					$$('p12e1').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					//pFirst[10] = true;
+				//}
+				break;
+			case 11:
+				//if(!pFirst[11]){
+					page13.innerHTML = '<div id="p13e1"><p>这里有全新的发展空间</p><p>这里有纯正的互联网空气</p><p>这里有充满机遇的前景与可能</p><p>这里有你能想象的一切</p><p>我们期待着希望在互联网及数字<br>服务业一展身手的你！</p></div><a id="p13e2" href="http://www.10086.cn/aboutus/news/announced/">相关招聘信息</a>';
+					$$('p13e1').style.webkitAnimation='fold2 1s 1';
+					$$('p13e1').addEventListener("webkitAnimationEnd", function(){
+						this.style.opacity = 1;
+					}, false);
+					//pFirst[11] = true;
+				//}
+				break;
+			case 12:
+				if(page14.children.length < 1){
+					page14.innerHTML = '<div></div>';
+				}
+				break;
+			default:
+				break;
+		}
+		if(nowPage != 2){
+			page2.innerHTML = '';
+		}
+		if(nowPage != 3){
+			page3.innerHTML = '';
+		}
+		if(nowPage != 4){
+			page4.innerHTML = '';
+		}
+		if(nowPage != 5){
+			page11.innerHTML = '';
+		}
+		if(nowPage != 6){
+			page6.innerHTML = '<div id="p6e1" onClick="callIn(1, 0)">查看详情</div>';
+		}
+		if(nowPage != 10){
+			page12.innerHTML = '';
+		}
+		if(nowPage != 11){
+			page13.innerHTML = '';
+		}
+		
+		/*if(nowPage != 10){
+			page10.className = '';
+			page10.innerHTML = ''; 
+		}*/
+	});
+
+	window.setTimeout(setSound, 50);
+	window.setTimeout(function(){
+		$$('pLoad').innerHTML = '<img src="images/page11-e3.png"><img src="images/extraP1.jpg"><img src="images/extraP2.jpg"><img src="images/extraP3.jpg"><img src="images/extraP4.jpg"><img src="images/extraP5.jpg"><img src="images/extraP6.jpg"><img src="images/page6N2-bg.jpg"><img src="images/page6N2-con.jpg"><img src="images/page14-bg.jpg"><img src="images/tail.png"><img src="images/tail2.png">';
+	}, 9000);
+	//window.setTimeout(function(){
+		//$$('tj').src = 'http://js.tongji.linezing.com/3530192/tongji.js';
+	//}, 10000);
+}
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+function setSound(){
+	//audio = document.createElement('audio');
+	audio = $$('myAudio');
+	//audio.src = 'sound/bgm02.mp3';
+	audio.style.display = 'none';
+	audio.autoPlay = true;
+	audio.loop = true;
+	//audio.volume = 0.4;
+	//audio.addEventListener("canplaythrough", function () {audio.play();}, false);
+	
+	audioBtn = document.createElement('div');
+	audioBtn.id = 'auBtn';
+	audioBtn.addEventListener('click', clickAudio, false);
+	//document.body.appendChild(audio);
+	document.body.appendChild(audioBtn);
+	//audio.addEventListener('ended', function () {
+    	//audio.play(); 
+	//})
+}
+function clickAudio(){
+	if(audioBtn.className == 'mute'){
+		audioBtn.className = '';
+		audio.play();
+	}else{
+		audioBtn.className = 'mute';
+		audio.pause();
+	}
+}
+//---个别处理
+var fiTar, iconId = -1, locked = false, afTimer, p1;
+function autoFlip(){
+	iconId ++;
+	if(iconId < 12){
+		fiTar.children[iconId].className = 'flip';
+		afTimer = window.setTimeout(autoFlip, 100);
+	}else{
+		locked = false;
+		//$$('hint1').style.display = 'none';
+		$$('fIcons').style.display = 'none';
+		p1 = $$('fIcons').parentNode;
+		p1.className = 'go';
+		p1.innerHTML = '<h2 class="newTitle">还不会用这些？<br>你out了！</h2><p class="newTxt" style="width:270px; text-align:center; margin-left:-136px;">移动互联网使数字化服务加速启动，<br>将我们的生活带入一个<br>实时分享、永远在线的全新时代。</p>';
+		//alert('end');
+	}
+}
+function flipMe(obj){
+	if(locked){
+		return false;
+	}
+	if(fstTimeFlip){
+		fstTimeFlip = false;
+		locked = true;
+		//hand1.style.display = 'none';
+		fiTar = $$('fIcons');
+		autoFlip();
+		return false;
+	}
+	flipTime = new Date();
+	if(obj == lastFlip){
+		//$$('temp').innerHTML = Math.abs(flipTimeLast - flipTime);
+		if(flipTimeLast != undefined && flipTimeLast != 0 && Math.abs(flipTimeLast - flipTime) < 400){
+			flipTimeLast = flipTime;
+			//$$('temp').innerHTML = '拦截'+Math.abs(flipTimeLast - flipTime);
+			return false;
+		}
+	}
+		
+	if(obj.className == 'flip'){
+		obj.className = '';
+	}else{
+		obj.className = 'flip';
+	}
+	flipTimeLast = flipTime;
+	lastFlip = obj;
+}
+function callIn(typeId, id){
+	if(typeId == 0){
+		hand2.style.display = 'none';
+	}
+	for( i = 0; i < 4; i++){
+		$$('page9').children[i].style.webkitAnimationPlayState = 'paused';
+	}
+	p6e1.style.webkitAnimationPlayState = 'paused';
+	wp2.style.display = 'block';
+	lastSub = wp2.children[id];
+	lastSub.style.display = 'block';
+	lastSub.style.zIndex = 101;
+	lastIn = id;
+	switch (typeId){
+		case 0:
+		switch (id){
+			case 0:
+				sub1.className = 'subP';
+				sub1.innerHTML = '<a href="javascript:void(0)" class="btnBack" onClick="goOut()"></a><h3>互联网云客服</h3><h5 class="subE1" style="letter-spacing:-1px;">互联网云客服，已实现对新媒体渠道的一点接入、集中运营与全网服务。<br>目前互联网云客服已入驻微博、微信、139邮箱、飞信、百度等主流渠道，不但能通过互联网信息监测平台实时发现客户意见，客服人员还可通过邮件、回复、私信为客户解决疑难，实现从发现、研判到互动客服的一体化在线服务解决方案。作为云客服的重要阵地，在线公司运营的中国移动10086官方微博、微信等自媒体已吸引粉丝关注超过1500万，日均互动量近50万人次。</h5>';
+				break;
+			case 1:
+				sub2.innerHTML = '<a href="javascript:void(0)" class="btnBack" onClick="goOut()"></a><h3>10086集中化客服坐席</h3><h5 class="subE1">10086，全国最著名的客服热线品牌。<br>具备7x24小时全天候语音客服能力，与国际漫游、终端、积分等多项专席服务。</h5>';
+				break;
+			case 2:
+				sub3.innerHTML = '<a href="javascript:void(0)" class="btnBack" onClick="goOut()"></a><h3>10085电话营销</h3><h5 class="subE1">10085电话营销，具有一点接入、支撑全国的热线销售能力。<br>为支持中国移动4G业务发展，正全力提供4G USIM卡、套餐、终端销售的一体化服务，并已拥有苹果、中兴、酷派、魅族等多家合作伙伴，试运行两月即有超千万的销售额。<br>2015年计划销售50万部4G终端。</h5>';
+				break;
+			case 3:
+				sub4.innerHTML = '<a href="javascript:void(0)" class="btnBack" onClick="goOut()"></a><h3>前后台分离的服务</h3><h5 class="subE1" style="letter-spacing:-1px;">基于前后台分离的服务，具备一点接入、支撑全国的前后台分离服务能力。被服务方公司的前台人员可仅负责客户接待与信息采集，而由向其提供服务的在线公司后台集中化团队为客户提供专业化、标准化服务，从而实现高效低成本运营。目前，基于此服务模式开展的中国移动实名制认证、信息安全服务已覆盖全国。</h5>';
+				//sub4.style.webkitAnimationPlayState = 'running';
+				break;
+			}
+			break;
+		case 1:
+			sub1.className = 'subP type1';
+			sub1.innerHTML = '<a href="javascript:void(0)" class="btnBack" onClick="goOut()"></a><div id="p6e5"></div><div id="p6e6"></div><div id="p6e7"></div>';
+			break;
+		case 2:
+			switch (id){
+				case 0:
+					sub1.className = 'subP type2';
+					sub1.innerHTML = '<a href="javascript:void(0)" class="btnBack" onClick="goOut()"></a><p class="popUp org"><b>中国移动（洛阳）呼叫中心</b><br>规划占地约1066亩，规划建设2万呼叫服务坐席，将于2015年一期一阶段建成。<img class="tail" src="images/tail2.png"></p>';
+					break;
+				case 1:
+					sub2.className = 'subP type2';
+					sub2.innerHTML = '<a href="javascript:void(0)" class="btnBack" onClick="goOut()"></a><p class="popUp"><b>中国移动（淮安）呼叫中心</b><br>规划占地约910亩，规划建设2万呼叫服务坐席，将于2015年一期一阶段建成。<img class="tail" src="images/tail.png"></p>';
+					break;
+			}
+			break;
+	}
+	wp2.addEventListener("webkitAnimationEnd", function(){
+		if(this.className == 'out'){
+			wp2.style.display = lastSub.style.display = 'none';
+			//sub4.style.webkitAnimationPlayState = 'paused';
+			lastSub.innerHTML = '';
+			for( i = 0; i < 4; i++){
+				$$('page9').children[i].style.webkitAnimationPlayState = 'running';
+			}
+			if(typeId == 1){
+				p6e1.style.webkitAnimationPlayState = 'running';
+				sub1.innerHTML = '';
+			}
+		}
+	}, false);
+	wp2.className = 'in';
+}
+function goOut(){
+	lastSub.zIndex = 100;
+	wp2.className = 'out';
+}
+
+function makeRoller(){
+	var rTime = 0, rIn;
+	rIn = window.setInterval(function(){
+		rTime ++;
+		makeBox();
+		if(rTime > 2){
+			window.clearInterval(rIn);
+		}
+	}, 1000)
+}
+function makeBox(){
+		tar = document.createElement('div');
+		tar.className = 'box';
+		tar.innerHTML = boxText[boxId];
+		boxId ++;
+		if(boxId > boxText.length - 1){
+			boxId = 0;
+		}
+		roller.appendChild(tar);
+		tar.style.background = 'rgb('+Math.round(Math.random()*255)+','+Math.round(Math.random()*255)+','+Math.round(Math.random()*255)+')';
+		tar.addEventListener("webkitAnimationEnd", function(){
+			this.outerHTML = '';
+			makeBox();
+		}, false);
+}
+//----------------制作刮刮卡封面
+var mPic, cvs, ctx, pixelTatio = getDevicePixelRatio();
+var start = 'mousedown',
+	move = 'mousemove',
+	end = 'mouseup';
+if (document.createTouch) {
+	start = "touchstart";
+	move = "touchmove";
+	end = "touchend";
+}
+function maskLoad() {
+	mPic = new Image();
+	mPic.src = "images/scrapeCover.jpg";
+	if (mPic.complete) {
+		drawMask(mPic);
+	} else {
+		mPic.onload = function() {
+			drawMask(mPic);
+		}
+		mPic.onerror = function() {
+			//window.alert('加载失败，自动重试');
+			maskload();
+		}
+	}
+}
+function drawMask(image, x, y, width, height){
+	createScratchCard('all', 1, function(f, t) {
+		if(f.toFixed(2) > 40){
+			//hand1.style.visibility = 'visible';
+			cvs.style.display = 'none';
+			
+			cvs.removeEventListener(start);
+			document.removeEventListener(end);
+			cvs.width = 1;
+			cvs.height = 1;
+			document.body.removeChild(cvs);
+			maskLoad = null;
+			drawMask = null;
+			getDevicePixelRatio = null;
+			createScratchCard = null;
+			window.setTimeout(flipMe, 1000);
+			//alert('刮完！'+navigator.userAgent);
+			//document.getElementById('lcd').value = '你一共刮了'+ f.toFixed(2) + '%';
+		}else{
+			//document.getElementById('lcd').value = '刮开面积:' + f.toFixed(2) + '%';
+		}
+	});
+}
+//load OK
+function getDevicePixelRatio(){
+	try{
+		return window.devicePixelRatio || 1;
+	}catch(e){
+		return 1;
+	}
+}
+var notPlayed = true;
+function createScratchCard(imgId, condition, callback, isOnce) {
+    var img = document.getElementById(imgId);
+    //if (img.complete || img.readyState == 'loading' || img.readyState == 'complete') {
+        generate();
+    //} else {
+    //    img.onload = generate;
+    //}
+    function generate() {
+        cvs = document.createElement('canvas');
+        cvs.style.position = 'absolute';
+		cvs.style.zIndex = 2;
+        cvs.style.left = img.offsetLeft + 'px';
+        cvs.style.top = img.offsetTop + 'px';
+		cvs.style.width = img.offsetWidth + 'px';
+		cvs.style.height = img.offsetHeight + 'px';
+        cvs.width = img.offsetWidth * pixelTatio;
+        cvs.height = img.offsetHeight * pixelTatio;
+        img.parentNode.insertBefore(cvs, img);
+		$$('all').style.opacity = 1;
+        ctx = cvs.getContext('2d');
+        ctx.fillStyle = '#bbb';
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		var newH = cw * pixelTatio /720 * 1280;
+		ctx.drawImage(mPic, 0, 0-(newH - ctx.canvas.height)/2 , ctx.canvas.width, newH);
+		//ctx.drawImage(mPic, 0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.strokeStyle = "fff";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 45 * pixelTatio;
+		//ctx.scale(0.5, 0.5);
+        var offsetParent = cvs,
+            offsetLeft = 0,
+            offsetTop = 0;
+        while (offsetParent) {
+            offsetLeft += offsetParent.offsetLeft;
+            offsetTop += offsetParent.offsetTop;
+            offsetParent = offsetParent.offsetParent;
+        }
+        var pathPoints = [];
+        var x, y;
+        cvs.addEventListener(start, onTouchStart);
+        function onTouchStart(e) {
+			if(notPlayed){
+				audio.play();
+				notPlayed = false;
+			}
+            e.preventDefault();
+            if (e.changedTouches) {
+                e = e.changedTouches[e.changedTouches.length - 1];
+            }
+            console.log(e.pageX, offsetLeft);
+            x = (e.pageX - offsetLeft) * pixelTatio;
+            y = (e.pageY - offsetTop) * pixelTatio;
+            ctx.beginPath();
+            ctx.arc(x, y, 35 / 2  * pixelTatio, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            document.addEventListener(end, onTouchEnd);
+            cvs.addEventListener(move, onTouch)
+        }
+        function onTouch(e) {
+            if (e.changedTouches) {
+                e = e.changedTouches[e.changedTouches.length - 1];
+            }
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo((e.pageX - offsetLeft) * pixelTatio, (e.pageY - offsetTop) * pixelTatio);
+            x = (e.pageX - offsetLeft) * pixelTatio;
+            y = (e.pageY - offsetTop) * pixelTatio;
+            ctx.closePath();
+            ctx.stroke();
+            var n = (Math.random() * 10000000) | 0;
+            ctx.canvas.style.color = '#' + n.toString(16); //fix android 4.2 bug force repaint
+        }
+        function onTouchEnd() {
+            cvs.removeEventListener(move, onTouch);
+            pathPoints = [];
+            check();
+        }
+        function check() {
+            var st = +new Date();
+            data = ctx.getImageData(0, 0, cvs.width, cvs.height).data;
+            var length = data.length,
+                k = 0;
+            for (var i = 0; i < length - 3; i += 4) {
+                if (data[i] == 0 && data[i + 1] == 0 && data[i + 2] == 0 && data[i + 3] == 0) {
+                    k++;
+                }
+            }
+            var f = k * 100 / (cvs.width * cvs.height);
+            if (f > (condition || 90)) {
+                if (callback) {
+                    callback(f, t);
+                    if (isOnce) {
+                        callback = null;
+                    }
+                }
+            }
+            var t = +new Date() - st;
+            //console.log('刮开面积:' + f.toFixed(2) + '% 检测耗时' + t + 'ms ');
+            data = null;
+        }
+    }
+}
+//----------------刮完
+</script>
+</head>
+
+<body>
+<img id="arrow" src="images/arrow.png">
+<div id="page"></div>
+<div id="all" style="opacity:0;">
+		<div id="wrapper">
+				<ul>
+						<li id="page1">
+								<dl id="fIcons">
+										<dd>
+												<div class="front"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-100px 0px;"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-200px 0px;"></div>
+										</dd>
+										<!---->
+										<dd>
+												<div class="front" style="background-position:0px -100px;"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-100px -100px;"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-200px -100px;"></div>
+										</dd>
+										<!---->
+										<dd>
+												<div class="front" style="background-position:0px -200px;"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-100px -200px;"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-200px -200px;"></div>
+										</dd>
+										<!---->
+										<dd>
+												<div class="front" style="background-position:0px -300px;"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-100px -300px;"></div>
+										</dd>
+										<dd>
+												<div class="front" style="background-position:-200px -300px;"></div>
+										</dd>
+										<!--p id="hint1" class="title subTxt1">轻按图标</p-->
+										<!--img id="hand1" src="images/hand.png" style="visibility:hidden;" onClick="flipMe()"-->
+								</dl>
+								
+						</li>
+						<li id="page2"></li>
+						<li id="page3">
+								<h2 class="newTitle">今天，客户在哪里<br>我们就在哪里</h2><div class="balls"></div><div class="balls no2"></div><div class="balls no3"></div><div class="balls no4"></div><div class="balls no5"></div><div class="balls no6"></div><div class="balls no7"></div>
+						</li>
+						<li id="page4"></li>
+						<li id="page11">
+								<div id="p11e1" style="opacity: 0;"></div><img id="p11e3" src="images/page11-e3.png" alt="" style="opacity: 0;"></li>
+						</li><!--其实这是5、6、7-->
+						<li id="page6"><h3 class="weAre" style="letter-spacing:1px; text-align:center;">&nbsp;</h3><div id="p6e2"></div><div id="p6e3"></div><div id="p6e4"></div><div id="p6e1" onClick="callIn(1, 0)">查看详情</div></li>
+						<li id="page7">
+								<p class="bigTitle">我们有</p>
+								<dl id="page9">
+										<dd onClick="callIn(0, 0)" style="z-index:10;">互联网云客服<img id="hand2" src="images/hand.png"></dd>
+										<dd onClick="callIn(0, 2)">10085电话营销</dd>
+										<dd onClick="callIn(0, 1)">10086集中化客服坐席</dd>
+										<dd onClick="callIn(0, 3)">前后台分离的服务</dd>
+										<p class="title subTxt1">点击图标了解更多&nbsp;</p>
+								</dl>
+								
+						</li>
+						<li id="page8">
+								<img id="p3e4" src="images/page3-e5.png">
+								<img id="p3e3" src="images/page3-e4.png">
+								<img id="p3e2" src="images/page3-e3.png">
+								<img id="p3e1" src="images/page3-e2.png">
+								<img id="p3e0" src="images/page3-e1.png">
+								<div class="title subTxt2 doAni"><p style="color:#FFF;">未来，我们还将依托中国移动自身<br>呼叫服务与互联网服务能力，向各<br>行各业的政企客户提供服务产品。</p></div></li>
+						</li>
+						<li id="page10">	<!-- 9 -->
+								<div id="p10e3"></div>
+								<div id="p10e4"></div>
+						</li>
+						<li id="page12">
+								<!--div id="p12e1">
+										<p>中移在线服务有限公司<br>即将启动面向系统内和全社会的</p>
+										<p>人力资源招聘</p>
+										<p>微博、微信互联网内容运营</p>
+										<p>互联网传播</p>
+										<p>IT支撑系统设计开发</p>
+										<p>智慧园区规划与建设</p>
+										<p>业务产品开发与营销</p>
+										<p>渠道拓展</p>
+										<p>人力资源</p>
+										<p>法律事务</p>
+										<p>财务管理</p>
+										<p>……</p>
+								</div-->
+						</li>
+						<li id="page13"></li>
+						<li id="page14"></li>
+				</ul>
+		</div>
+		<div id="wrapper2">
+				<div id="sub1" class="subP">
+						
+				</div>
+				<div id="sub2" class="subP">
+						
+				</div>
+				<div id="sub3" class="subP">
+						
+				</div>
+				<div id="sub4" class="subP">
+						
+				</div>
+		</div>
+		<audio id="myAudio" src="../pCM3/sound/bgm02-cVBR.mp3" autoplay loop></audio>
+		<div id="pLoad"></div>
+</div>
+<script type="text/javascript">
+var xmlHttp;
+function createxmlHttpRequest(){
+if(window.ActiveXObject){
+    xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+}else if(window.XMLHttpRequest)
+    xmlHttp=new XMLHttpRequest();
+}
+function doGet(url){//注意在传参数值的时候最好使用encodeURI处理一下，防止乱码
+	createxmlHttpRequest();
+	xmlHttp.open("GET",url);
+	xmlHttp.send(null);
+	xmlHttp.onreadystatechange=function(){
+		if(xmlHttp.readyState==4&&xmlHttp.status==200){
+			//alert('success');
+			//window.setTimeout(function(){$$('myTj').src = 'http://js.tongji.linezing.com/3530192/tongji.js';}, 3000);
+		}else{
+			//alert('fail');
+		}
+	}
+}
+doGet('../pCM3/sound/bgm02-cVBR.mp3');
+</script>
+<!--script type="text/javascript" id="myTj"></script-->
+<!--img src="http://img.tongji.linezing.com/3530192/tongji.gif" width="0px" height="0px" style="display:none;" alt=""-->
+<!--script type="text/javascript" src="http://js.tongji.linezing.com/3530192/tongji.js"></script-->
+<!--div style="display:none"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254073236'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1254073236%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script></div-->
+<!--script src="http://s4.cnzz.com/z_stat.php?id=1254073236&web_id=1254073236" language="JavaScript"></script-->
+</body>
+</html>
