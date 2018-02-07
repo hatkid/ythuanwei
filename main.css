@@ -3,7 +3,7 @@
 
 *{ padding:0px; margin:0px; font-family:'STHeiti', '黑体', '微软雅黑'; border:none;}
 img{ border:0px !important;}
-html, body{ display:block; width:100%; height:100%; overflow:hidden;}
+html, body{ display:block; width:100%; height:100%; overflow:hidden; background: #000;}
 
 #all{ display:block; overflow:hidden; position:absolute; left:0px; top:0px; right:0px; bottom:0px;}
 #arrow{ display:block; width:40px; height:25px; position:absolute; z-index:90; left:50%; margin-left:-20px; bottom:-8px; -webkit-animation:arrowAni 2s infinite; -webkit-animation-direction:alternate;}
@@ -15,9 +15,11 @@ html, body{ display:block; width:100%; height:100%; overflow:hidden;}
 #auBtn.mute{ background-position:0px -30px;}
 #page{ display:none; width:100px; height:20px; line-height:20px; position:absolute; z-index:3; right:10px; bottom:10px; text-align:right; font-size:16px; color:#FFF; text-shadow:0px 1px 5px #000;}
 
-#wrapper, #wrapper2{ display:block; width:100%; height:100%; overflow:hidden; position:absolute; left:0px; top:0px; z-index:1; background:#FFF;}
+#wrapper, #wrapper2{ display:block; width:100%; height:100%; overflow:hidden; position:absolute; left:0px; top:0px; z-index:1;}
 #wrapper ul{ display:block; width:100%; height:auto; overflow:hidden;}
-#wrapper ul li{ display:block; width:100%; height:500px; background:#FFF; overflow:hidden; float:left; position:relative;}
+#wrapper ul li{ display:block; width:100%; height:500px; background: url(images/p0.jpg) no-repeat center center; background-size: auto 100%; overflow:hidden; float:left; position:relative;}
+#wrapper ul li:nth-child(2){ }
+
 
 #wrapper2{ display:none; z-index:100;}
 #wrapper2.in{ display:block; -webkit-animation:wp2In 1s 1;}

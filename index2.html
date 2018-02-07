@@ -91,10 +91,10 @@ window.onload = function () {
 	for(i = 0; i < total; i++){
 		tmp = tar.children[0].children[i];
 		tmp.style.height = ch+'px';
-		if(i > 0 && i < 15){
-			tmp.style.backgroundImage = "url('images/p"+i+".jpg')";
-		}else if(i == 15){
-			tmp.style.backgroundImage = "url('images/end1.jpg')";
+		if(i < 17){
+			tmp.style.backgroundImage = "url('images/p"+(i+15)+".jpg')";
+		}else if(i == 17){
+			tmp.style.backgroundImage = "url('images/end2.jpg')";
 		}
 	}
 	
@@ -187,7 +187,9 @@ function clickAudio(){
 						<li></li>
 						<li></li>
 						<li></li>
-						<li onClick="window.location.href='index2.html'">&nbsp;</li>
+						<li></li>
+						<li></li>
+						<li onClick="window.location.href='index.html'">&nbsp;</li>
 				</ul>
 		</div>
 		<audio id="myAudio" src="images/bgm1.mp3" autoplay loop></audio>
