@@ -3,7 +3,7 @@
 
 *{ padding:0px; margin:0px; font-family:'STHeiti', '黑体', '微软雅黑'; border:none;}
 img{ border:0px !important;}
-html, body{ display:block; width:100%; height:100%; overflow:hidden; background: #000;}
+html, body{ display:block; width:100%; height:100%; overflow:hidden; background: #15191f;}
 
 #all{ display:block; overflow:hidden; position:absolute; left:0px; top:0px; right:0px; bottom:0px;}
 #arrow{ display:block; width:40px; height:25px; position:absolute; z-index:90; left:50%; margin-left:-20px; bottom:-8px; -webkit-animation:arrowAni 2s infinite; -webkit-animation-direction:alternate;}
@@ -17,8 +17,12 @@ html, body{ display:block; width:100%; height:100%; overflow:hidden; background:
 
 #wrapper, #wrapper2{ display:block; width:100%; height:100%; overflow:hidden; position:absolute; left:0px; top:0px; z-index:1;}
 #wrapper ul{ display:block; width:100%; height:auto; overflow:hidden;}
-#wrapper ul li{ display:block; width:100%; height:500px; background: url(images/p0.jpg) no-repeat center center; background-size: auto 100%; overflow:hidden; float:left; position:relative;}
-#wrapper ul li:nth-child(2){ }
+#wrapper ul li{ display:block; width:100%; height:500px; overflow:hidden; float:left; position:relative; background: url(images/small-loadV.gif) no-repeat center center; background-size: 300px 400px;}
+#wrapper ul li.page{ background: url(images/p0.jpg) no-repeat center center; background-size: auto 100%;}
+#wrapper ul li.page.e2{ background-image: url(images/end1.jpg);}
+#wrapper ul li.page.e3{ background-image: url(images/end2.jpg);}
+
+#wrapper ul li img{ display: block; width: auto; height: 100%; margin: 0px auto; border: none; outline: none;}
 
 
 #wrapper2{ display:none; z-index:100;}

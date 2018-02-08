@@ -4,23 +4,26 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <meta content="no" name="apple-mobile-web-app-capable" /> 
 <meta charset="UTF-8">
-<title>中移在线服务有限公司</title>
+<title>宇通环卫技术部2018年会回顾</title>
 <link rel="stylesheet" type="text/css" href="main.css">
 <style type="text/css">
 
 </style>
 <script type="text/javascript" src="iscroll.js"></script>
+<!--script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="jquery.scrollLoading.js"></script-->
+
 <script type="text/javascript">
 function $$(id){return document.getElementById(id)}
 //var imgUrl = 'http://1822mall.com/project1/images/wx_img.jpg';
 //var lineLink = 'http://1822mall.com/project1/';
 //var imgUrl = 'http://116.255.193.122:9999/pCM/images/wx_img.jpg';
 //var lineLink = 'http://116.255.193.122:9999/pCM/';
-var imgUrl = 'http://theal.net/projects/2014/pCM4/images/wx_img.jpg';
-var lineLink = 'http://theal.net/projects/2014/pCM4/index.html';
+var imgUrl = 'images/yutong.jpg';
+var lineLink = 'index.html';
 var shareTitle = '宇通环卫技术部2018年会回顾';
-var descContent = "小伙伴们是不是等不及了呢？一起回顾一下年会的精彩瞬间吧！";
-var appid = '';
+var descContent = "图多杀猫！建议wifi环境下横屏使用哦";
+var appid = 'wxc87c106733e11828';
 
 function shareFriend() {
     WeixinJSBridge.invoke('sendAppMessage',{
@@ -73,28 +76,28 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {// �
 }catch(e){
 }
 //--------------------
-var myScroll, tar, tmp, total = 0, cw = 0, ch = 0, page, nowPage = 1;
+var myScroll, tar, tmp, total = 0, cw = 0, ch = 0, page, nowPage = 1, notPlayed = true;
 window.onload = function () {
-	tar = $$('wrapper');
-	total = tar.children[0].children.length;
+	tar = $$('wrapper').children[0];
+	total = tar.children.length;
 	cw = $$('all').offsetWidth;
 	ch = $$('all').offsetHeight;//window.innerHeight;//document.documentElement.clientHeight;
 	//alert('!!ch='+ch+' inH='+window.innerHeight+'  ='+document.documentElement.clientHeight+' screen.height='+screen.height);
 	if(document.documentElement.clientHeight == screen.height){
 		ch = document.documentElement.clientHeight - 64;
 		//$$('all').style.height = ch+'px';
-		tar.children[0].style.height = ch * total + total + 'px';
+		tar.style.height = ch * total + total + 'px';
 	}else{
-		tar.children[0].style.height = ch * total + total + 'px';
+		tar.style.height = ch * total + total + 'px';
 	}
 	//$$('all').style.height = ch+'px';
 	for(i = 0; i < total; i++){
-		tmp = tar.children[0].children[i];
+		tmp = tar.children[i];
 		tmp.style.height = ch+'px';
-		if(i < 17){
-			tmp.style.backgroundImage = "url('images/p"+(i+15)+".jpg')";
-		}else if(i == 17){
-			tmp.style.backgroundImage = "url('images/end2.jpg')";
+		if(i > 0 && i < 15){
+			//tmp.style.backgroundImage = "url('images/p"+i+".jpg')";
+		}else if(i == 15){
+			//tmp.style.backgroundImage = "url('images/end1.jpg')";
 		}
 	}
 	
@@ -113,8 +116,26 @@ window.onload = function () {
 		snapSpeed: 1000
 	});
 	//myScroll.goToPage(0, 5, 0);
+	myScroll.on('scrollStart', function(){
+		if(notPlayed){
+			audio.play();
+			notPlayed = false;
+		}
+	});
 	myScroll.on('scrollEnd', function(){
 		nowPage = myScroll.currentPage.pageY + 1;
+		if(nowPage > 1){
+			tmp = tar.children[nowPage-1];
+			if(tmp.children[0].getAttribute('data-url')){
+				tmp.children[0].setAttribute('src',tmp.children[0].getAttribute('data-url'));
+				tmp.children[0].setAttribute('data-url', '');
+			}
+			tmp = tar.children[nowPage];
+			if(tmp.children[0].getAttribute('data-url')){
+				tmp.children[0].setAttribute('src',tmp.children[0].getAttribute('data-url'));
+				tmp.children[0].setAttribute('data-url', '');
+			}
+		}
 		//page.innerHTML = nowPage+'/13';
 		switch (nowPage){
 			case 2:
@@ -172,24 +193,24 @@ function clickAudio(){
 <div id="all">
 		<div id="wrapper">
 				<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li onClick="window.location.href='index.html'">&nbsp;</li>
+						<li><img src="images/p15.jpg"></li>
+						<li><img data-url="images/p16.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p17.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p18.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p19.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p20.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p21.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p22.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p23.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p24.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p25.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p26.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p27.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p28.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p29.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p30.jpg" src="images/1px.png" alt=""></li>
+						<li><img data-url="images/p31.jpg" src="images/1px.png" alt=""></li>
+						<li class="page e3" onClick="window.location.href='index.html'">&nbsp;</li>
 				</ul>
 		</div>
 		<audio id="myAudio" src="images/bgm1.mp3" autoplay loop></audio>
